@@ -7,21 +7,24 @@
  2계층(data):ethernet,스위치
  1계층(physical):전선,전파,repeater,HUB,bit
 ---------------------------------------------------------
+**[명령]**
 Win + R (명령)
 [명령어] --> 관리자 shift + ctrl 클릭
 control - 제어판
 ncpa.cpl - 네트워크 환경
 firewall.cpl - 방화벽 설정
 cmd:DOS창
-ipconfig -->랜카드 네트워크 정보 출력
+ipconfig -->랜카드 네트워크 정보 출력 (Window =ipconfig , linux = ifconfig,  ip a) 
 ipconfig/all (자세하게 출력)
 ------------------------------------------------------
  이더넷 어댑터 이더넷 2:
-
    연결별 DNS 접미사. . . . :
    설명. . . . . . . . . . . . : Realtek PCIe GbE Family Controller #2 (3COM등 여러회사가 있다.)
-   물리적 주소(MAC 주소) . . . . . . . : 9C-6B-00-B1-E6-73 (2,4,6,8,10,16진수, 16진수이다.) 
-                                       48bit 0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F (글자 1개는 4bit)
+   물리적 주소(MAC 주소) . . . . . . . : 9C-6B-00-B1-E6-73
+       ** OUI(Organizationally Unique Identifier) 24bit : 제조회사 **
+          Serial : 제조회사에서 부여하는 번호
+        (2,4,6,8,10,16진수, 16진수이다.) 
+        48bit 0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F (글자 1개는 4bit)
        영문자 1개는 1byte -->한글은 2byte이다.
         8bit는 1byte 이다.
      네트워크에 연결되는 모든 장치는 무조건! MAC가 있어야 통신이 가능하다.(MAC -->데이터링크 계층)
@@ -107,9 +110,6 @@ www.virtualbox.org
 
 pick pick 캡쳐
 Shift + Win + S 원하는 부분만(워드한글)
-10.0.0.1 gateway에서 사용(windows에서도 사용)
-ncpa.cpl (명령모드) --> VMnet8 (우클릭, 속성)
-인터넷 프로토콜 버전 4 더블클릭 --> 10.0.0.2/255.255.255.0 으로 변경
 
 10.0.0.0/24 --> Network ID(네트워크 범위)
 -시작주소와 마지막 주소는 사용하지 않는다(사용자가)
@@ -125,8 +125,6 @@ Windows 명령창 이용 ncpa.cpl
  VMware의 기본설정은 변경하지 않고 사용하도록 되어 있지만
  네트워크를 이해하기 위해 gateway를 서로 변경해준다.
 
-인터넷 프로토콜 버전4를 더블클릭해서 10.0.0.2번 아이피로 변경해준다.
-
 -Linux
 kalilinux.org 다운로드
 installer images (iso파일을 다운로드, 이미지 파일) -노트북,데스크탑등 물리적인 컴퓨터에 클린설치시 사용
@@ -136,7 +134,7 @@ RAM 4G
 HDD 50GB
 CPU 최대 2개
 
-*VM기본설정하기*
+**VM기본설정하기**
 1. VMware들어가서 Edit 들어가서 preference들어가서 저장 위치 확인.( 폴더 내 파일있는지 확인)
 2. 이상없으면 Edit -> network -> 하단 Change Settings(관리자권한)
 3.defalut해서 초기화. -> NAT 세팅  10.0.0.0/255.255.255.0 후 NAT Setting들어가서 10.0.0.1
