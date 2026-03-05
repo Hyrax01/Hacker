@@ -1,0 +1,8 @@
+네트워크 7계층
+ 7계층(application): HTTP,SMTP,SNMP,FTP,TELNET,SSH&scp,NFS,ping
+ 6계층(presentation):압축, 암호화, 포맷변환
+ 5계층(session): 세션 체결, 통신 방식 결정, 로그인
+ 4계층(transport): TCP,UDP,SCTP,(TLS,SSL은 4,5,6계층 모호)
+ 3계층(network):IP,ICMP,IGMP,ARP,RARP,OSPF,RIP,IPsec
+ 2계층(data):ethernet,스위치
+ 1계층(physical):전선,전파,repeater,HUB,bit
