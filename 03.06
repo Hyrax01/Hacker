@@ -1,0 +1,40 @@
+-VMware 에서 여러 리눅스 실행법
+ 파일 new virtual machine custom
+
+-설정
+ kali(8g)hdd 60g, rocky(8g)(완)
+ alma / hdd:50g / ram 4g (cui)
+ ubuntu ram 8g
+ windsow server(gui) 8g
+
+-Rocky Linux 
+ 터미널 명령어
+  nano(메모장)
+  $ls -l/etc > test.txt (파일생성)
+  $vi test.txt
+  : (normal 모드)
+  esc ( 나가기)
+  h = 커서를 왼쪽으로 이동
+  l = 커서를 오른쪽으로 이동
+  j = 커서를 아래로 이동
+  k = 커서를 위로 이동
+  w = 다음 단어의 처음으로 이동
+  b = 이전 단어의 처음으로 이동
+  G = 제일 끝 줄로 이동 = ]]
+  gg = 파일의 처음으로 이동 = [[
+  Ctrl + b = 한 화면 위로 이동
+  Ctrl + f = 한 화면 아래로 이동
+  set number = 몇 줄인지 뜸 
+  0,Home,^ = 그 줄 첫 째 문자로
+  End,$ = 그 줄 마지막 문자로
+  / 한다음 단어 치면 해당 단어 점등 -> i 현재 커서 앞에 삽입 및 입력모드
+                                     a 현재 커서 뒤에 삽입 및 입력모드
+                                     o 현재 커서 아랫줄에 삽입 및 입력모드
+                                     O 현재 커서 윗 줄에 삽입 및 입력모드
+
+
+
+
+
+
+
