@@ -1,0 +1,83 @@
+1. FTP 서버 구축
+# dnf install vsftpd          -y
+# firewall-cmd --list-all    (방화벽 정책 확인)
+# firewall-cmd --permanent --add-service=ftp
+# firewall-cmd --reload
+# systemctl enable --now vsftpd  
+# ps -ef | grep ssh
+sshd: /usr/sbin/sshd -D
+# ifconfig
+10.0.0.130
+
+2. 각 서비스별 사용하는 포트(어떤 포트를 어떤 서비스에서 사용하는가?)
+FTP – File Transfer Protocol   -----    FTP 21번 포트를 사용한다.
+20(포트) FTP - Data 
+21 FTP - Command
+
+vsFTPD ---> FTP Server   (Linux 에 설치, 프로그램, 서비스)
+filezilla  ---> FTP Client    (로컬에서 서버에 접속하기 위한 프로그램, 여러 종류가 있다. 알ftp.... 등....)
+# netstat -antp | grep ftp
+172.16.0.254:22     ------>    IP주소:포트번호   ---->  포트번호 well-known  를 이용하여 어떤 서비스가 작동 되고 있는지 판단 할 수 있다.
+
+
+http://koreaitjob.co.kr/
+
+SSH
+ssh 계정@호스트주소
+ssh -l 계정 호스트주소
+$ cat /etc/redhat-release
+$ su
+# shutdown -h now
+
+22 ---> SSH   (원격접속(제어)프로그램)
+OpenSSH --->  Server 프로그램
+putty, mobaxterm 등 많은 프로그램이 있다 --->  Client
+
+
+-------------------------------------------------------------
+Windows 와 Linux 의 서비스 관련 파일들 위치
+C:\Windows\System32\drivers\etc   --->   services [Windows]
+# cat /etc/services [Linux]
+
+포트(네트워크 관리사에 출제)
+- TCP사용
+20  ftp-data
+21  ftp-command
+22  ssh
+23  telnet
+25  SMTP
+53  domain(dns) ---- TCP/UDP
+69  tftp    -----   UDP를 사용한다.
+80  http 
+110  POP
+143  IMAP
+161  SNMP   ----- UDP를 사용한다.    
+443  HTTPS
+3306 MySQL
+*사람이 사용하는건 application(응용계층)이고, 포트 번호 말하면 transport(전송계층)이다.
+https://www.wireshark.org/
+
+ Q1.192.168.0.0/24가 있다. 호스트(PC) 31개를 최적의 서브넷팅을 해라.
+1=네트워크 , 0=호스트
+= 192.168.0.0/26
+1110 0000 8개 32개 -> Subnet ID,Broadcast -> 30개 사용가능
+1100 0000 4개 64개 
+
+192.168.0.0/25 -> 0 128 네트워크 2개 호스트 128개
+192.168.0.0/26 -> 0 64  네트워크 4개 호스트 64개
+
+100 -> 7비트(10000000) **/25 ->192.168.0.0/25
+15 -> 5비트(11100000) **/27 ->192.168.0.128/27
+7 -> 4비트(11110000) **/28 ->192.168.0.160/28
+
+
+
+
+
+
+
+
+
+
+
+
