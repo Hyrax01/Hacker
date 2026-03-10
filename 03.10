@@ -81,9 +81,26 @@ Ex)  201.102.1.0/24
 영업부 네:192.168.1.0 브:192.168.1.127 호:192.168.1.1~192.168.1.126
 마케팅 네:192.168.1.128 브:192.168.1.159 호:192.168.1.129~192.168.1.158
 인사부 네:192.168.1.160 브:192.168.1.175 호:192.168.1.161~192.168.1.174
+----------------------------------------------------------------------------------------------
+라우팅
+
+BIOS (Basic Input/Output System)
+CMOS (Complementary Metal-Oxide-Semiconductor)
+
+[Packet Tracer]
+# show run
+interface Serial0/0/0 (내용 확인)
+Router#configure terminal
+Enter configuration commands,one per line. End with CNTL/Z
+Router(config)#interface serial 0/0/0
+Router(config-if)#ip address
 
 
 
+CPU -> RAM -> HDD 
+메모리와 함께하면 프로그램 -> 프로세서
+RAM은 지웠다 썼다 ㄱㄴ
+ROM은 불가능
 
 
 
