@@ -147,6 +147,14 @@ $kali-tweaks -> hardening setting -> ssh client 체크 (openssl ,samba도)
 
 #apt install fcitx5 fcitx5-hangul im-config -y
 #im-config -> fcitx5체크 ->reboot
+시작 -> fcitx-configuration 
 
 Ctrl + spacebar (언어 변경)
-
+Ctrl + U (그 문장 다 지우기)
+--------------------------------------------------------------------------------------------------
+Burp Suite 설치(Pro 버전) (크랙=내꺼 털릴생각하고 써야함)
+[Proxy Tool]
+ls = 거기 있는 파일들 보여줌 
+pwd = 현재 위치를 보여줌 
+cd (목적지) = 목적지로 이동함 (후에 pwd하면 본인의 바뀐 위치 알 수 있음)
+$java -jar ./burploader.jar (전에 cd burp로 이동 후 해야함)
