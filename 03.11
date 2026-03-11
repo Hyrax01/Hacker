@@ -23,7 +23,7 @@ interface에 IP주소 설정 방법
 R0>en (R0 CLI에서 호스트 이름 부여 및 IP부여)
 R0#conf t
 R0(config)#hostname R0
-R0(config)#int s 0/0/0
+R0(config)#int s0/0/0
 R0(config-if)#ip add 204.200.7.5 255.255.255.252
 R0(config-if)#no shutdown
 R0(config-if)#
@@ -40,3 +40,38 @@ R1#ping 204.200.7.5 (R1에서 R0(204.200.7.5)로 핑 보내기)
 Type escape sequence to abort.
 Sending 5, 100-byte ICMP Echos to 204.200.7.5, timeout is 2 seconds:
 !!!!!   (!는 정상)
+
+라우터 0--------------------------------------------------------------
+R0>en
+R0#conf t
+R0(config)#int fa 0/0
+R0(config-if)#ip add 192.168.0.1 255.255.255.0
+R0(config-if)#no shutdown
+R0(config-if)#
+
+
+ping 192.168.0.2
+ping 192.168.0.3
+ping 204.200.7.6
+
+라우터 1------------------------------------------------------------------
+R1>en
+R1#conf t
+R1(config)#int fa 0/0
+R1(config-if)#ip add 8.8.8.1 255.255.255.0
+R1(config-if)#no shutdown
+R1(config-if)#
+
+[라우팅]
+Default Static Route (수동)
+0.0.0.0 0.0.0.0 ->0.0.0.0를 사용 디폴트 스태틱 라우팅(수동으로 설정)
+0.0.0.0 = any = 모든 것
+
+ip route 0.0.0.0 0.0.0.0(상대방 라우터의 IP | 상대방 라우터와 연결된 자신의 장치,인터페이스)
+
+-Static Route
+ip route (상대방의네트워크 서브넷마스크)
+
+
+
+
