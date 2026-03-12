@@ -153,8 +153,10 @@ route -n
 netstat -nr 
 ip route show
 
-
-
+8.8.8.8 = 구글 DNS 서버
+8.8.4.4
+168.126.63.1 = KT
+168.126.63.2
 
 
 
