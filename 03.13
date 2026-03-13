@@ -1,0 +1,80 @@
+L3 switch (Router + switch)
+Switch#earse startup-config
+Switch#delete vlan.dat
+Switch
+bridge(software) <-> switch(hardware)
+
+MAC Table = Switch 안에있다
+없으면    = Hub
+Forwarding = 뭔가 전달해준다
+filtering = 남의 것을 못보는 것
+flooding = 자기빼고 다 전달하는 것
+half - duplex = 반이중 통신(무전기같은거)
+Full - duplex = 전이중 통신(양방향 동시 가능)
+CSMA/CD  = ethernet 방식, 하나의 채널을 양방향 공유
+MAC(48bit) = 24bit(OUI ->회사) + 24bit(Serial -> 회사 
+PDU = 네트워크 프로토콜 데이터 유니트
+      dategram = ip,udp
+TCPdump -> 사용법이 기사시험에 아주 가끔 출제
+wireshark(tshark는 TUI)ㅅ5
+Promiscuous mode (무작위 모드) = 패킷 스네핑 가능해짐
+*wireshark 오른쪽 키 + 따라가기 기억하기
+
+
+프로세스 = 데몬(daemon)
+(명령어) file, cat? ssh?
+서비스 구동 -> 관리자 권한이 있어야 한다. 
+$sysyemctl start ssh (enable, disable, status , stop, restart)
+#netstat -antp | grep ssh (비슷한 명령어 = #ss -lntp | grep ssh)
+
+-----------------
+22번을 통해 파일 전송할 수 있다. sftp라고 한다(예 FTP는 ftps를 사용한다.)
+~~~ = 홈 디렉토리
+cd = 디렉토리 이동
+# cd /usr/bin
+# cd ~
+# pwd -> /root(root관리자 홈 디렉토리)
+바로 이전 디렉토리로 이동 = -(대시)
+# cd - (바로 이전 디렉토리로 이동)
+# cd = 바로 홈으로
+
+홈 디렉토리: 계정(아이디), 사용자의 홈 디렉토리(사용자 공간)
+/home/계정이름 (이렇게 만들어진다.)
+# cd/home/kali
+--------------------------
+#기호가 있으면 관리자이다. 이 사용자로 디렉토리를 생성하거나 파일을 생성하면 관리자의 것이다. 일반 사용자는 사용x
+
+$ unzip -t (파일명) = zip 압축 해제시 사용
+          (-t 는 압축을 풀지않고 내용을 확인할때 사용)
+          (-d 는 내가 원하는 위치에 압축해제)
+$ mkdir (디렉토리 명) = 디렉토리 생성
+$ls;pwd ( ;는 다중 명령어 사용시 사용) = 현재 파일들(ls)과 현재 위치(pwd)를 같이 알려줌
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
