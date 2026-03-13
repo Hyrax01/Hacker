@@ -12,23 +12,38 @@ flooding = 자기빼고 다 전달하는 것
 half - duplex = 반이중 통신(무전기같은거)
 Full - duplex = 전이중 통신(양방향 동시 가능)
 CSMA/CD  = ethernet 방식, 하나의 채널을 양방향 공유
-MAC(48bit) = 24bit(OUI ->회사) + 24bit(Serial -> 회사 
-PDU = 네트워크 프로토콜 데이터 유니트
-      dategram = ip,udp
+MAC(48bit) = 24bit(OUI ->제조사) + 24bit(Serial -> 해당장치 고유번호)
+
+PDU = 각 네트워크 계층에서 쓰이는 데이터 단위 이름
+     ex)dategram = ip,udp / packet(3계층), frame(2계층)
+
 TCPdump -> 사용법이 기사시험에 아주 가끔 출제
-wireshark(tshark는 TUI)ㅅ5
+wireshark = 그래픽 인터페이스 (tshark는 TUI = 터미널 인터페이스)
 Promiscuous mode (무작위 모드) = 패킷 스네핑 가능해짐
+
 *wireshark 오른쪽 키 + 따라가기 기억하기
+ Wireshark 통계 -> 대화 들어가서 분석 할 수 있는 것
 
+데몬(daemon = 백그라운드에서도 계속 실행되는 시스템)
 
-프로세스 = 데몬(daemon)
-(명령어) file, cat? ssh?
-서비스 구동 -> 관리자 권한이 있어야 한다. 
-$sysyemctl start ssh (enable, disable, status , stop, restart)
+(명령어) 
+ file (파일의 종류 확인) 
+ cat(파일의 내용을 화면에 출력 or (#cat file1.txt file2.txt > merged.txt) 처럼 두 개의 파일을 하나로 합쳐서 새 파일 생성)
+ 서비스 구동 -> 관리자 권한이 있어야 한다. 
+ $sysyemctl start ssh (enable, disable, status , stop, restart) = 원격조종 가능상태 시작
+  -> systemctl 시스템 서비스관리 명령어(시작 중지 재시작등 확인가능)
+     ssh = secure shell 의 약자, 원격 서버 접속 가능
+
 #netstat -antp | grep ssh (비슷한 명령어 = #ss -lntp | grep ssh)
+ ->netstat = 네트워크 상태 확인 명령어
+   a → 모든 연결과 listening 포트 표시
+   n → 숫자(IP/포트)로 표시 (호스트 이름 해석 안 함)
+   t → TCP 연결만 표시
+   p → 어떤 **프로세스(PID/이름)**가 사용하는지 표시
+   | grep ssh → SSH 관련 줄만 필터링
 
 -----------------
-22번을 통해 파일 전송할 수 있다. sftp라고 한다(예 FTP는 ftps를 사용한다.)
+22번 포트(ssh 포트)을 통해 파일 전송할 수 있다. sftp라고 한다(예 FTP는 ftps를 사용한다.)
 ~~~ = 홈 디렉토리
 cd = 디렉토리 이동
 # cd /usr/bin
@@ -51,8 +66,31 @@ $ mkdir (디렉토리 명) = 디렉토리 생성
 $ls;pwd ( ;는 다중 명령어 사용시 사용) = 현재 파일들(ls)과 현재 위치(pwd)를 같이 알려줌
 
 
+----------------------------------------------------------------------
+[오후]
+vSphere 엔터프라이즈 플러스:
+HG00K-03H8K-48929-8K1NP-3LUJ4
+4F40H-4ML1K-M89U0-0C2N4-1AKL4
+vCenter 표준:
+4F282-0MLD2-M8869-T89G0-CF240
+0F41K-0MJ4H-M88U1-0C3N0-0A214
 
+프로그램설치 관리자로!!!!  (시스템 관리)
+dnf install httpd* -y  
+firewall-cmd --permanent --add-service={ftp,telnet,http,https,dns}
+firewall-cmd --reload
+systemctl enable --now httpd
+ps -ef | grep httpd
 
+# dnf install unzip
+# unzip main.zip -d /var/www/html/
+# cd $_   =(   cd /var/www/html/   )
+# pwd
+/var/www/html/
+# mv main\(pentest\)/* . (main~/*까지의 파일을 . 이라는 디렉토리에 mv한다)
+# mv index.php index.html
+
+:%s/MYSQL/NAVER/g
 
 
 
