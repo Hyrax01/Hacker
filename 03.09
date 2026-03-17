@@ -29,7 +29,7 @@ WIC : Wan Interface Card(오른쪽 0,1,2,3 에 장착)
 
 
 > User mode : 사용자 모드
-> enable	     (Privilege Mode)
+> enable	(#en)     (Privilege Mode)
 # show running-config  (메모리의 설정값을 출력하라)
   - sh run
 
@@ -41,7 +41,6 @@ interface Serial0/1/0
  no ip address
  clock rate 2000000
  shutdown    (중지된 상태) 라우터는 기본적으로 살 때 비활성화 상태
-
 
 
 1) Delete : 삭제
