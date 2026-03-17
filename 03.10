@@ -8,7 +8,7 @@
 sshd: /usr/sbin/sshd -D
 # ifconfig
 10.0.0.130
-
+ 
 2. 각 서비스별 사용하는 포트(어떤 포트를 어떤 서비스에서 사용하는가?)
 FTP – File Transfer Protocol   -----    FTP 21번 포트를 사용한다.
 20(포트) FTP - Data 
