@@ -126,10 +126,136 @@ Switch(config-if)#switchport access vlan 20
 Switch(config-if)#int fa0/4
 Switch(config-if)#sw mo acc
 Switch(config-if)#sw acc vl 20
--------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
+Trunking 설정 : Inter-VLAN을 이용하여 하나의 물리적인 인터페이스를 여러개의 VLAN의 논리적인 인터페이스로 나누었다.
+이를 다시 서로간에 통신할 수 있는 하나의 인터페이스로 소속시키는 것을 트렁킹(Trunking)라 하고, 이처럼 논리적으로 분할된 해당포트를 트렁크 포트라고 한다.
+앞에서 언급한 토플로지를 보면 PC0, PC1, PC2 의 모든 포트는 스위치와 연결되어 있고 이 스위치는 fa0/1 번의 인터페이스를 통하여 라우터와 연결된 것을 확인 할 수 있다. 이러한 토플로지인 경우 스위치에서 라우터와 연결된 fa0/1인터페이스 포트를 트렁크 포트로 설정하여 트렁킹을 하게 된다.
+
+
+--------  sw 1
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#vlan 10
+Switch(config-vlan)#vlan 20
+Switch(config-vlan)#int fa0/1
+Switch(config-if)#sw mo acc
+Switch(config-if)#sw acc vl 10
+Switch(config-if)#int f0/3
+Switch(config-if)#sw mo acc
+Switch(config-if)#sw acc vl 20
+Switch(config-if)#end
+Switch#
+%SYS-5-CONFIG_I: Configured from console by console
+
+Switch#sh vlan
+
+
+sw 2-----------------
+Switch#
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#vl 10
+Switch(config-vlan)#vl 20
+Switch(config-vlan)#int f0/1
+Switch(config-if)#sw mo acc
+Switch(config-if)#sw acc vl 10
+Switch(config-if)#int f0/2
+Switch(config-if)#sw mo acc
+Switch(config-if)#sw acc vl 20
+Switch(config-if)#end
+Switch#
 
 
 
+Switch#conf t
+Switch(config)#interface gigabitEthernet 0/1
+Switch(config-if)#switchport mode trunk
+
+
+
+Switch(config)#int g0/1
+Switch(config-if)#sw mo tr
+
+
+ping 192.168.0.2 (헤더 분석)
+ 1) PC -> SW (Inbound),   Inbound -> Switch -> Outbound
+ 2) Simulation > Next 버튼
+ 3) Protocol Data Unit(Ethernet 2) - Ethernet 802.1Q 표준
+ - TCI: 0x000a는 VLAN 태그 정보 중 Tag Control Information (TCI)에 대한 값을 나타낸다. TCI는 VLAN 식별자와 프레임의 우선순위 정보를 포함하는 16비트의 필드이다.
+ - TCI: 0x000a는 VLAN ID가 10이고, 우선순위가 0이며, 혼잡 시 드롭되지 않는 프레임이다.
+    Priority Code Point (PCP, 3 비트) : 우선순위
+    Drop Eligible Indicator (DEI, 1 비트) : 혼잡시 드롭되지 않는 프레임
+    나머지 00a 12bit는 10(VLAN 값, 1~4094)
+  - TPID (Tag Protocol Identifier) 값이 0x8100인 프레임은 IEEE 802.1Q VLAN 태그를 포함하고 있는 Ethernet 프레임이다.
+
+NATIVE VLAN 1번, 공장 출하지 기본값, 통신시 802.1Q에서는 VLAN 1의 tag(header,)를 만들지 않는다. 
+
+
+Switch#show interfaces gigabitEthernet 0/1 switchport
+
+
+00:01:97:0E:51:0E
+Switch(config)#interface range fastEthernet 0/1-2  (fa0/1 하고 fa0/2 동시에 설정)
+Switch(config-if-range)#
+
+Switch#conf t
+Switch(config)#vlan 10
+Switch(config-vlan)#vl 20
+Switch(config-vlan)#int ra f0/1-2
+Switch(config-if-range)#sw mo tr
+
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#int ra g0/1-2
+Switch(config-if-range)#sw mo tr
+Switch(config-if-range)#vlan 10
+Switch(config-vlan)#vlan 20
+Switch(config)#int fa 0/1
+Switch(config-if)#sw mo acc
+Switch(config-if)#sw acc vl 10
+Switch(config-if)#int fa0/2
+Switch(config-if)#sw mo ac
+Switch(config-if)#sw ac vl 20
+
+
+Switch(config)#interface range gigabitEthernet 0/1-2
+Switch(config-if-range)#switchport mode trunk 
+Switch(config-if-range)#int fa0/1
+Switch(config-if)#sw mo acc
+Switch(config-if)#sw acc vl 10
+Switch(config-if)#int fa0/2
+Switch(config-if)#sw mo acc
+Switch(config-if)#sw acc vl 20
+
+
+Switch(config)#spanning-tree vlan 10 root primary
+Switch(config)#spanning-tree vlan 20 root secondary
+
+Switch(config)#spanning-tree vl 20 root pr
+Switch(config)#sp vl 10 ro se
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*조심*
+http://fix1004.myds.me
+
+HOST : fix1004.myds.me
+Port : 21021
+ID : koreait
+PW : 코리아IT26#
+
+* 집 가서 패킷 재 복습 /  노트 정리
 
 
 
