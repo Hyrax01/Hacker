@@ -56,19 +56,19 @@ R1(config-line)#login local       (계정을 사용 하겠다)
    - login local : 로컬 및 원격, 계정 및 비번 확인
 
 
-SNMP = 161포트 udp:SNMP, FTP69번
+SNMP = 161포트 udp:SNMP, FTP 69번
 
 R1(config)#no ip domain-lookup = DNS 질의 안하도록 설정(오류 명령어 대기프롬프트 해결)
-copy r s 뜻??
+#copy r s = #copy running-config startup-config = 지금 설정 저장하는 명령어 (재부팅해도 유지됨) 
 
 R1#conf t
 Enter configuration commands, one per line.  End with CNTL/Z.
-R1(config)#cdp run
+R1(config)#cdp run  //이 장비 전체에서 CDP 기능 켠다 (연결되어 있는 장비 탐색 시작)
 R1(config)#int s 0/2/0
-R1(config-if)#cdp enable
+R1(config-if)#cdp enable //이 포트에서만 CDP 쓰겠다.
 
-R2#show cdp entry *
-R2#show cdp neighbors
+R2#show cdp entry * //상세정보를 보여줌
+R2#show cdp neighbors //간단요약정보만 보여줌
 -------------------------------------------------
 1. 전용회선 : 항상 연결됨 (고정 연결), 고속, 안정성 높음, 비용이 비쌈
  1) T1, E1, T3, STM-1 등
