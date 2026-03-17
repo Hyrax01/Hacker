@@ -34,7 +34,7 @@
 
 ifconfig
 ssh계정명@호스트
-ssh roror@10.0.0.132 (mobaxtum 에도 써도됨)
+ssh roror@10.0.0.132  (mobaxtum 에도 써도됨)
 
 
 
