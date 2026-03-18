@@ -1,0 +1,40 @@
+장비: 접속방법(방화벽,AP등 장비에 기본 접속 IP 제공된다.)
+     -공장 초기화
+     -실장비는 오류가 적다! 
+
+[리눅스-pfsense]     
+
+  -pfsense -> shell(8번) -> 명령어 칠 수 있음
+  pfctl -d  방화벽 해제
+  pfctl -e  방화벽 설정
+  - pfctl 상태확인
+pfctl -s info (방화벽 상태 정보가 정상 출력되는지 확인)
+pfctl -s rules   (현재 적용된 방화벽 규칙 확인, pfctl -sr 규칙만 간략하게 확인)
+pfctl -vvsr  (규칙을 더 상세히(verbose) 출력)
+pfctl -vvss (상태 정보(state table) 상세히 확인)
+pfctl -s nat  (포트포워딩이나 NAT 규칙 확인)
+pfctl -s state  현재 열려 있는 세션/커넥션 확인 (특정 세션 끊을 때 사용 가능)
+
+- 방화벽 활성화
+pfctl -e  (방화벽 활성화)
+pfctl -d  (방화벽 비활성화)
+/etc/rc.reload_all (pfSense의 설정을 다시 로드하는 명령어)
+pfctl -f /tmp/rules.debug (방화벽 규칙 다시 로드 (특정 설정 파일 재적용))
+
+- 콘솔에서 락 해제
+pfctl -s Tables    ( 테이블 목록 보기)
+ - 일반적으로 로그인 차단(lockout) 관련 테이블은 lockout 또는 sshlockout 이름으로 존재
+pfctl -t sshguard -T show  (차단된 IP가 나오는지 확인)
+pfctl -t 테이블명 -T flush   (차단된 IP 삭제, 전체 비우기)
+pfctl -t 테이블명 -T delete 192.168.1.100  (특정 IP 만 삭제)
+
+pfctl -t <블럭용 테이블> -T add <IP주소>   (특정  IP 강제 차단) 
+
+방화벽 - NAT 
+ -Windows(firewall.cpl) 방화벽
+ -Linux(Kernel : netfilter, nftables) -- iptables,firewalld,ufw(유틸리티)  // Kernel (운영체제의 핵심 - 메모리 매핑, 하드웨어 관리)
+ -방화벽은 화이트리스트/블랙리스트 나뉘는데, 화이트리스트: 다 차단해놓고 해당 사람만 허용 / 블랙리스트: 다 열고 해당 사람만 차단.
+ -
+
+
+
