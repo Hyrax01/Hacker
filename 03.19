@@ -1,0 +1,65 @@
+kali <--> pfsense <-->  (22022) rocky(192.168.1.100) -->22번(SSH Server)
+                     ㄴ (1:1) meta(192.168.1.102) -->22번(SSH Server,80 Web Server)
+                     ㄴmint(192.168.1.101)
+pfsense - 기본적으로 NAT가 설치됨(설치할때 선택할 수 있다) , 1:1, port forward 라는 기능 구현 가능하다.
+NAT(SNAT,DNAT,PNAT등 여러 기능이 있다.)
+
+Transport (L4,전송계층) - TCP(포트),UDP(포트)
+   well-known 0 ~ 1023 (privileges port = 관리자 포트) / (~65535) 전체가 2^16만큼 사용할 수 있다. 
+21,22,23,25,80... 서비스가 작동하고 있다는 걸 알 수 있다. 
+cilent <--> server(위의 포트로 서비스가 작동한다는건, 서버이다.)
+
+-리눅스에서 호스트 이름 변경 방법
+hostnamectl set-hostname 이름
+hostnamectl status
+cat /etc/hostname
+
+file 파일지정 (어떠한 파일의 형식을 출력한다.)
+  -리눅스 명령어 읽기-
+   ls /home 에 /home(파라미터)는 ls에 집어넣어
+   which useradd 에 useradd(파라미터)는 which에 집어넣어
+
+  nmcli c ,d ?
+# nmcli c modify ens160 ipv4.address 10.0.0.201/24 (IP,Netmask)
+# nmcli c modify ens160 ipv4.gateway 10.0.0.1      (gateway) 
+# nmcli c modify ens160 ipv4.dns 8.8.8.8,8.8.4.4   (dns server 주소지정)
+# nmcli c modify ens160 ipv4.method manual         (수동으로 지정, DHCP는 auto로 변경)
+# nmcli c down ens160;nmcli c up ens160            (랜카드 다시 활성화)
+
+# systemctl enable --now httpd
+# firewall-cmd --permanent --add-service=http
+# firewall-cmd --reload
+
+-DHCP 설명을 구현하라 
+pfsense service dhcpserver lan , lan interface enable해주고 primary ad pool 대역정하고 밑에 dns ip적고, 다시 ip a 해서 ip할당받았는지 확인. 안되어있으면 기본 설정에서 nat로 변경
+
+1:1 NAT - firewall / nat/ 1:1/edit 
+          external subnet ip : 10.0.0.123으로 변경
+
+port forwarding
+ ssh -> rocky server(22번)
+ pfsense(22 -> meta)
+ pfsense(22022) -> rocky server(22번)
+
+
+ Almalinux 에서 설정
+# vi /etc/NetworkManager/system-connections/ens160.nmconnection
+[ipv4]
+method=auto
+
+:wq
+-----  수정 -----------
+# reboot
+
+[오후] 
+pfsense에서 op1 설정하고 알마 드가서 systemctl restart NetworkManager 하면 ip 바뀜
+
+# hping3 10.0.0.132 --icmp --faster -c 100 == 디도스 탐지
+
+
+
+
+
+
+
+
