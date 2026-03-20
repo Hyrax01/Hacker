@@ -4,6 +4,7 @@
 
 [리눅스-pfsense]     
 
+
   -pfsense -> shell(8번) -> 명령어 칠 수 있음
   - pfctl 상태확인
 pfctl -s info (방화벽 상태 정보가 정상 출력되는지 확인)
