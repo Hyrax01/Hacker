@@ -1,0 +1,6 @@
+
+[OPT custom setting]
+drop tcp any any -> any 22 (msg:"giJeong SSH Server";content:"SSH";sid:2024010101;)
+drop tcp any any -> any 80 (msg:"HTTPFlooding...";flags:S;threshold:type both,track by_src,count 10,seconds 2;sid:2024010102;)
+drop tcp any any -> any 443 (msg:"HTTPFlooding...";flags:S;threshold:type both,track by_src,count 10,seconds 2;sid:2024010103;)
+drop icmp any any -> any any (msg:"ToDetected Dos";threshold:type limit,track by_src,count 10,seconds 2;sid:2023010202;)
