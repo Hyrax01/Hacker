@@ -1,0 +1,37 @@
+입력모드  i o a 잘 기억 나머지 응용
+
+yy 현재 커서가 위치한 줄을 버퍼에 복사 (중요)
+p , dd , dw , d$ or D 잘 기억
+
+ctrl v = 비주얼 블록 -> 방향키로 범위 정하고 한꺼번에 명령 //다시하기
+# = 주석
+U = ctrl + z , 반대는 ctrl + R 
+fg ,ctrl + z 
+x = 한 단어 지우기, r = 한 단어 고치기 
+
+/root = root란 단어를 밑으로 내려가며 찾는다  .. n= 기본값 N= 반대 (해보기)
+?root = root란 단어를 올라가며 찾는다
+
+:w = 저장 , :q = 종료 , ! = 강제로 (습관화)
+
+sp , vs = 창 분할 , ctrl + w = 다음 창으로
+gg,G,[[,]] 
+% 전체를 의미
+:%s(전체를 치환한다는 뜻)/(치환전 문자열)/(치환후 문자열)/
+:100 = 100번쨰 줄로 이동
+:set list 뒤에 $표시나오게하는거
+:s///g  (뒤에 g 붙히면 중간 라인도 바뀜 // 원래는 왼쪽 라인만 바뀜)
+:g/hyrax/d = hyrax들어간건 다 지운다 , :v/hyrax/d = hyrax들어간거 빼고 다 지운다
+
+
+<rocky 설정 후, putty 진입 하게 하는 명령어>
+# dnf install epel-release
+
+root@localhost:/home/roror# nmcli c modi ens160 ipv4.address 10.0.0.200/24
+root@localhost:/home/roror# nmcli c modi ens160 ipv4.gateway 10.0.0.1
+root@localhost:/home/roror# nmcli c modi ens160 ipv4.dns 10.0.0.200,8.8.8.8
+root@localhost:/home/roror# nmcli c modi ens160 ipv4.method manual
+root@localhost:/home/roror# nmcli c down ens160
+root@localhost:/home/roror# nmcli c up ens160
+
+
