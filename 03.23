@@ -1,6 +1,9 @@
+ICMP
 
 [OPT custom setting]
 drop tcp any any -> any 22 (msg:"giJeong SSH Server";content:"SSH";sid:2024010101;)
 drop tcp any any -> any 80 (msg:"HTTPFlooding...";flags:S;threshold:type both,track by_src,count 10,seconds 2;sid:2024010102;)
 drop tcp any any -> any 443 (msg:"HTTPFlooding...";flags:S;threshold:type both,track by_src,count 10,seconds 2;sid:2024010103;)
 drop icmp any any -> any any (msg:"ToDetected Dos";threshold:type limit,track by_src,count 10,seconds 2;sid:2023010202;)
+
+"2초 이내에 10회 이상의 ICMP 패킷을 전송하는 특정 IP를 DoS 공격자로 간주하여, 해당 패킷을 실시간으로 차단(Drop)하고 로그를 남기는 규칙임."
