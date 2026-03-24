@@ -1,3 +1,4 @@
+[리눅스 단축키]
 입력모드  i o a 잘 기억 나머지 응용
 
 yy 현재 커서가 위치한 줄을 버퍼에 복사 (중요)
@@ -23,6 +24,91 @@ gg,G,[[,]]
 :s///g  (뒤에 g 붙히면 중간 라인도 바뀜 // 원래는 왼쪽 라인만 바뀜)
 :g/hyrax/d = hyrax들어간건 다 지운다 , :v/hyrax/d = hyrax들어간거 빼고 다 지운다
 
+-원하는 값 블럭 지정
+:set nohlsearch(비활성화)
+:sethlsearch(활성화)
+:noh (선택해제)
+/^.\{26} = 26번째 칸까지 활성화
+
+:%s/(대입)//
+:%s//&/ 위의 (대입)값을 기억한다
+
+
+- 들여쓰기 가능
+:set cindent , :set smartindent , :set autoindent
+
+.exrc( 이전에 사용, 자격 시험용 암기)
+$vi.vimrc (vim 실행시 환경변수 자동으로 설정) -- 강사님은 잘 안씀
+tilix - ctrl + shift  + t 창만들기 , ctrl page up/down으로 조절가능 = ctrl + tap
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+[Tmux (kali로 실습했음)]
+
+tmux는 터미널 멀티플렉서(Terminal Multiplexer) 라고 부르는 프로그램이다.
+하나의 터미널 세션 안에서 여러 개의 가상 터미널을 만들고, 분할하고, 백그라운드로 유지할 수 있게 해주는 도구이다.
+
+tmux
+tmux new -s 새이름  
+tmux new -s 세션이름 -n 창이름
+
+Ctrl + B +,  (창 이름 변경)
+Ctrl + B + 1,  n    이동 
+
+"
+%
+
+tmux ls       (tmux list-session) 
+Ctrl+B + D   detach(디태치)
+
+tmux attach -t session (tmux a 가능)
+tmux a -t 0  (다른사람의 세션 연결 가능)
+tmux switch -t session
+Ctrl+b : → switch –t
+
+Ctrl + B + C    
+Ctrl + B + N, P    
+Ctrl + B + W   (S 도 가능) 
+Ctrl + B + ,         이름 변경    
+Ctrl + b + 0~9     
+Ctrl + B + S (set -g mouse on 사용시)
+# vi /etc/tmux.conf
+set -g mouse on
+
+Ctrl + B + [         
+Ctrl + B + l (L)    (이전창 이동)
+
+Ctrl + B + %        
+Ctrl + B + "        
+Ctrl + B + Z     화면 확대    
+Ctrl + B + 화살표키  
+Ctrl + B + Q         
+Ctrl + B + T       
+Ctrl + B + Alt+화살표
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1. 명령어 입력 기본 흐름
+[키보드 입력] → [터미널 에뮬레이터] → [셸] → [커널] → [프로그램 실행] → [결과 출력]
+
+2. 터미널(Terminal)이란?
+ 1) 원래는 물리적인 입력·출력 장치(키보드+화면) 의미였음.
+ 2) 지금은 터미널 에뮬레이터(GUI에서 터미널 환경을 흉내내는 프로그램) 의미로 많이 씀.
+ 2) 사용자가 텍스트 명령어를 입력하면, 그 명령을 셸(shell) 이 받아서 실행하고 결과를 출력.
+
+2. 터미널 에뮬레이터 (예: Tilix, GNOME Terminal, Konsole, xterm)
+ 1_ 그래픽 환경에서 텍스트 모드 UI를 제공.
+ 2) 탭, 분할, 단축키, 폰트 설정 등 부가 기능.
+
+3. 셸(Shell)
+ 1) 사용자가 입력한 명령을 해석하고 실행.
+ 2) 대표 셸: bash, zsh, fish, sh 등.
+
+4. 커널(Kernel)
+ 1) 셸이 요청한 작업을 실제로 처리하는 운영체제의 핵심.
+ 2) 파일 읽기/쓰기, 네트워크, 프로세스 관리 등 담당.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 <rocky 설정 후, putty 진입 하게 하는 명령어>
 # dnf install epel-release
@@ -33,5 +119,12 @@ root@localhost:/home/roror# nmcli c modi ens160 ipv4.dns 10.0.0.200,8.8.8.8
 root@localhost:/home/roror# nmcli c modi ens160 ipv4.method manual
 root@localhost:/home/roror# nmcli c down ens160
 root@localhost:/home/roror# nmcli c up ens160
+
+
+**컴퓨터 초기화됐을때를 위한 vm station 네트워크 기본세팅
+1. vm station의 edit에서 virtual network editor 에서 관리자 권한으로 nat를 10.0.0.0 /255.255.255.0 으로 맞추고 우측 nat 세팅에서 gateway를 10.0.0.1로 설정(다른거는 건들지 않는다)
+2.vm에서 저장 후, 컴퓨터에서 ncpl.cp -> 가상 8번으로 들어가서 ipv4 프로토콜 설정을 10.0.0.2 로 변경해준다.
+3.끝
+
 
 
