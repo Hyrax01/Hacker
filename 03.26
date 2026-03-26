@@ -1,0 +1,54 @@
+-리눅스 종료
+ shutdown -h now
+ poweroff
+ init 0
+
+shutdown -h +5 = 5분 후 종료
+shutdown -r 10:10 system will be rebooted
+shutdown –k now “5분뒤에 종료 예정입니다. 작업을 마무리 하세요”
+shutdown –h +5 “5분뒤에 종료합니다”
+shutdown –h now  (시스템 종료)
+shutdown –r now (시스템 재시작)
+shutdown –c (포그라운드시Ctrl+c)
+
+halt -w : 시스템을 종료하거나 재부팅하지 않고, 관련 정보만 /var/log/wtmp에 저장한다.
+halt -n : sync 작업을 수행한다.
+halt -f : 시스템 강제종료
+halt -p : 시스템종료후 시스템 전원까지 off
+
+
+- 재부팅
+shutdown -r now
+reboot
+init 6
+
+POSIX -> 표준 Unix ,Linux같은 명령어 사용
+-c : 어떠한 프로그램을 한번만 사용하는 옵션
+sudo : 관리자의 권한으로 실행 하겠다.
+
+*암기* 계정 추가하기 - useradd(adduser) 계정명
+               passwd 계정명 또는 passwd(자신의 패스워드 변경)
+       계정 지우기 - userdel -r 계정명
+passwd 일반사용자가 사용가능한가? -> yes 본인 passwd를 말하는거기때문
+passwd user 일반사용자가 사용가능한가? -> no 다른 사람의 계정접근 x
+
+-파일(변수)를 로그아웃하지않고 다시 읽을때 사용
+즉 현재의 터미널에 바로 파일의 변수를 올린다
+$source .bashrc
+$. .bashrc
+
+alias 명령어를 생성(기존의 명령어를 새로운 명령어로 생성, 즉 바로가기 같은 느낌)
+
+#unalias -a (다시)
+
+
+
+
+
+
+
+
+
+
+
+
