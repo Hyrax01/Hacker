@@ -1,0 +1,113 @@
+* $tail -f 는 파일을 실시간으로 보여준다.
+echo는 "(쌍따옴표) 무조건 써야함. (싱글따옴표 x)
+
+* windows : \r \n 
+  linux : \n
+  16진수: 0d 0a
+
+\r (캐리지 리턴 = 맨 왼쪽으로 //타자기) 
+
+env 전역 환경 변수 출력
+set 지역(터미널) 변수
+PS1 = "[\u@\h \w]\\$ "
+
+기본 디렉토리 권한: 777
+기본 파일 권한: 666
+$umask : 0022
+$umask -S  u=rwx, g=rx, o=rx
+mkdir 디렉토리명 -> 755로 생성
+touch 파일명 -> 644로 생성
+
+rws r-s r-x  6755 
+rws r-x r-t  5755
+rwS r-S r-T  7644
+
+가. 디렉토리 권한            * 권한은 무조건 소유자,그룹,그외 적용 이다. *
+  1) 읽기(r)  : 디렉토리 내 파일 목록을 볼 수 있다.
+  2) 쓰기(w) : 디렉토리 내에서 파일을 생성, 삭제, 이름 변경할 수 있다.(중요 : 파일의 내용 수정과는 별개이다.)
+    - 파일의 삭제 여부는 파일 자체의 권한과는 무관하며, 디렉토리의 권한에 따라 결정된다.
+    - 디렉토리(755,root소유)에서 파일(777,roror)가있다면, roror 사용자는 삭제할 수 없다.
+    - (중요)현위치에서 디렉토리내에 (파일/디렉토리)가 있다면 내부 파일 이름을 알아야 삭제가 가능하다.
+     ∙wx 가 있어야 삭제 가능하나 이름을 알아야 하므로 rwx 권한이 있어야 삭제 된다.
+     ∙디렉토리에 (파일/디렉토리) 존재시 권한이 100,200,300,400,500,600 삭제 불가, 700 삭제가능
+  3) 실행(x)  : 디렉토리 내 파일이나, 서브 디렉토리에 접근할 수 있다.
+
+ 나. 파일 권한(rwx)에 따라 읽기, 쓰기, 실행 가능하다.
+  1) 파일 권한에따라 파일 읽기, 쓰기, 실행이 가능하다. 생성, 삭제, 이름 변경은 디렉토리 권한 이다.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SAN 정보는 CSR (Certificate Signing Request)를 만들 때 포함된다. (openssl req로 CSR 만들 때 SAN 포함해서 만들어야 한다.)
+
+자체 CA 키 + 인증서 생성
+
+# CA 개인키
+openssl genrsa -out ca-key.pem 4096
+# CA 인증서 (루트 CA)
+openssl req -x509 -new -key ca-key.pem -sha256 -days 3650 -out ca.pem \
+  -subj "/C=KR/ST=Daegu/L=Daegu/O=Security/OU=RootCA/CN=Roror Root CA"
+
+
+----------------------------------------------------------------------------------------------------------
+[openssl 설정파일 생성]
+# vi openssl-san.cnf
+
+[ req ]
+default_bits       = 2048
+prompt             = no
+default_md         = sha256
+req_extensions     = req_ext
+distinguished_name = dn
+
+[ dn ]
+C  = KR
+ST = Daegu
+L  = Daegu
+O  = Roror Company
+OU = Sec
+CN = roror.co.kr
+
+[ req_ext ]
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = roror.co.kr
+DNS.2 = www.roror.co.kr
+DNS.3 = mail.roror.co.kr
+
+-서버키 생성
+# openssl genrsa -out server-key.pem 2048
+
+- CSR 생성 명령어
+# openssl req -new -key server-key.pem -out server.csr -config openssl-san.cnf
+
+- 인증서 서명
+openssl x509 -req -in server.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial \
+  -out server-cert.pem -days 825 -sha256 \
+  -extfile openssl-san.cnf -extensions req_ext
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
