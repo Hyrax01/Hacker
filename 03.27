@@ -34,8 +34,14 @@ rwS r-S r-T  7644
 
  나. 파일 권한(rwx)에 따라 읽기, 쓰기, 실행 가능하다.
   1) 파일 권한에따라 파일 읽기, 쓰기, 실행이 가능하다. 생성, 삭제, 이름 변경은 디렉토리 권한 이다.
+ 
+ [표]
+  r(reading, 4)      w(writing, 2)       x(executing,1)                  
+      rwx                   rwx              rwx
+ s(SUID-소유자권한)   s(SGID-그룹 권한)    t(Sticky-삭제권한)
+       U                    G                    O
 
---------------------------------------------------------------------------------------------------------------------------------------------------------
+ --------------------------------------------------------------------------------------------------------------------------------------------------------
 
 SAN 정보는 CSR (Certificate Signing Request)를 만들 때 포함된다. (openssl req로 CSR 만들 때 SAN 포함해서 만들어야 한다.)
 
@@ -88,9 +94,32 @@ openssl x509 -req -in server.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial \
 
 
 
+- 
+# dnf install httpd   (httpd 패키지를 설치)
+   httpd 프로그램(실행)
+# systemctl enable --now httpd   (아래의 2개를 동시에 실행)
+  systemctl start httpd   (시작)
+  systemctl enable httpd  (부팅시 활성화)
 
+# firewall-cmd --permanent --add-service=http
+# firewall-cmd --reload   
+# firewall-cmd --list-service
 
+# dnf install telnet-server telnet
+# systemctl enable telnet.socket
+# systemctl start telnet.socket
 
+[Telnet(원격 접속을 제공) = daemon(데몬 = 백그라운드에서 동작하는 프로그램)]
+실행시키는 방식 
+ 1.슈퍼데몬
+   - inetd / xinetd가 대기, 요청 시 telnetd 실행
+   장점: 메모리 절약
+   단점: 처음 요청 시 느림
+
+ 2.스탠드 얼론
+   - telnetd를 직접 실행, 항상 떠 있음
+   장점: 요청 시 바로 처리 → 빠름
+   단점: 메모리 계속 사용
 
 
 
