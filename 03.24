@@ -113,6 +113,7 @@ Ctrl + B + Alt+화살표
 <rocky 설정 후, putty 진입 하게 하는 명령어>
 # dnf install epel-release
 
+[IP 변경하는 명령어]
 root@localhost:/home/roror# nmcli c modi ens160 ipv4.address 10.0.0.200/24
 root@localhost:/home/roror# nmcli c modi ens160 ipv4.gateway 10.0.0.1
 root@localhost:/home/roror# nmcli c modi ens160 ipv4.dns 10.0.0.200,8.8.8.8
