@@ -1,0 +1,122 @@
+mysql -u root -p
+
+
+windows.php.net
+ ▷ Apache + mod_php (멀티스레드) → Thread Safe (TS) 버전 사용    PHP의 “Thread Safety” (스레드 안전성)를 보장하기 위해 TSRM (Thread Safe Resource Manager)을 사용
+ ▷ Non-Thread Safe (NTS): Windows에서 IIS (FastCGI)와 함께 PHP를 실행할 경우(TSRM이 비활성화되어 있어 성능이 더 빠름)
+ ▷ Linux (Apache + PHP-FPM) → Non-Thread Safe (NTS) 버전 사용
+
+
+<?php    ?>  --->   <?    ?>
+
+<? phpinfo(); ?>
+
+
+<?php
+$servername = "localhost";
+$username = "roror";
+$password = "qhdks12";
+$dbname = "pentest";
+
+// MySQL 연결 생성
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// 연결 확인
+if ($conn->connect_error) {
+    die("연결 실패: " . $conn->connect_error);
+}
+echo "성공적으로 연결되었습니다.";
+
+// 연결 종료
+$conn->close();
+?>
+
+
+----------------------------------------
+   ① PHP 8.x에서는 미정의 변수가 사용될 경우 Warning이 아니라 Fatal Error로 동작하는 경우가 많아졌기 때문에, 정의되지 않은 변수가 있을 경우 PHP가 오류를 발생한다.
+   ⓶ error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT   (해당 옵션이 엄격하게 설정)
+    1) E_ALL → PHP의 모든 오류, 경고, 알림을 포함 (기본적으로 모든 오류를 출력)
+    2) ~E_DEPRECATED → Deprecated(사용 중단 예정) 경고를 제외
+     • PHP 버전이 올라가면서 더 이상 사용되지 않는 함수나 기능을 사용하면 E_DEPRECATED 오류가 발생하는데, 이를 제외함.
+     • 예: mysql_connect() (PHP 5.5부터 mysqli 또는 PDO로 대체됨)
+    3) ~E_STRICT → Strict 모드 경고를 제외
+     • PHP가 더 엄격한 코딩 방식을 요구하는 경우 발생하는 경고를 제외함.
+     • 주로 PHP 5.x에서 사용되었으며, PHP 7 이상에서는 사실상 의미가 없음.
+
+
+오류 해결(PHP의 php.ini에서 오류 보고 수준을 조정하여, 미정의 변수가 치명적인 오류를 일으키지 않도록 설정)
+     • E_NOTICE와 E_WARNING을 제외하여 변수 미정의로 인한 오류를 무시.
+     • display_errors = Off 설정으로 실제 운영 환경에서 오류가 사용자에게 노출되지 않도록 함.
+
+error_reporting = E_ALL & ~E_NOTICE & ~E_WARNING
+
+
+
+--------------------------------------------------------------------
+DNS 53   TCP/UDP
+dig (linux)    --->  dig @네임서버 도메인
+host (linux)   --->  host 도메인 네임서버
+nslookup   (Windows, Linux, 대화형)   ---> nslookup 도메인 네임서버
+
+
+*** 리눅스에서 홈페이지 구축해보기 ***
+
+# dnf install httpd* -y
+tar.gz     tar 묶는다.  gzip 압축한다.
+-t   압축해제 하지 않고 내용만 볼때
+-x  압축해제
+-c  압축
+-v   자세히 출력(파일 풀때 내용 출력)
+-f    파일 지정
+-z    gzip 압축 옵션
+
+
+DVWA is a web application designed to practice and learn web security vulnerabilities.
+
+Pentest is the process of testing systems to find and fix security vulnerabilities.
+
+# dnf install mariadb mariadb-server
+# cat /etc/my.cnf.d/charset.cnf
+[mysqld]
+character-set-server = utf8mb4 
+[client]
+default-character-set = utf8mb4
+# systemctl enable --now mariadb
+# mysql_secure_installation  (# mariadb-secure-installation)
+
+> create database pentest;  //pentest라는 이름의 데이터베이스 생성
+> create database dvwa;     //dvwa라는 이름의 데이터베이스 생성
+> grant all privileges on pentest.* to roror@localhost identified by 'qhdks12'; // roror라는 사용자에게 pentest 데이터베이스에 **모든 권한(all privileges)**을 줌
+                                                                                   pentest.* → pentest DB 내 모든 테이블(*) 포함
+                                                                                   roror@localhost → localhost에서만 접속 가능
+                                                                                   identified by 'qhdks12' → 비밀번호 qhdks12 설정
+> grant all privileges on dvwa.* to roror@localhost;                            // dvwa DB에 대한 모든 권한을 roror에게 부여
+                                                                                   비밀번호 지정 없음 → 이미 존재하는 사용자 roror 사용
+> flush privileges;                                                             // MySQL 서버에 있는 사용자 권한 테이블을 다시 읽도록 명령
+
+--------------------------------
+mysql -u 아이디 -p    (엔터)
+mysql -u아이디 -p'패스워드'
+mysql -u아이디 -p'패스워드' 데이터베이스명
+
+
+# dnf install php
+# dnf install php-opcache php-gd php-curl php-mysqlnd
+# systemctl enable --now php-fpm
+# systemctl restart httpd
+
+# audit2why < /var/log/audit/audit.log                                           ///var/log/audit/audit.log 파일을 읽고, 왜 SELinux가 특정 동작을 차단했는지 사람이 이해할 수 있는 형태로 설명해 줌 (디버깅 도구)
+root@roror:/var/www/html/pentest# setsebool -P httpd_can_network_connect 1       //Apache가 외부 네트워크 접속 허용 (curl, API 요청 등)
+root@roror:/var/www/html/pentest# setsebool -P httpd_can_network_connect_db 1    //Apache가 DB 접속 허용 (PHP에서 MySQL/MariaDB 접속 가능)
+
+[mysql]
+show databases; = 메인의 데이터들 확인 
+use (데이터명)   = 메인의 데이터 항목들 중 진입
+show tables;    =  진입한 데이터에서 세부 항목 확인 
+
+*/
+rocky의 /var/www/html/pentest의 query.txt를 mysql로 = mysql < query.txt (mysql의 pentest의 데이터에서 해야함)
+[mysql] select host,user,password from user;
+        flush privileges;
+
+
