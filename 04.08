@@ -1,0 +1,116 @@
+Apache 
+PHP
+MySQL
+-APM-
+
+---
+
+rpm -qa = 추적할때 쓰는 명령어
+rpm -ql  =  
+
+dnf 
+yum (dnf랑 같은 명령어)
+rpm
+rpm -ivh
+
+apt
+apt-get
+dpkg
+ 
+
+---
+
+[ 인증키 생성 법]
+
+SSLCertificateFile /etc/ssl/server-cert.pem   (공개)
+SSLCertificateKeyFile /etc/ssl/server-key.pem  (개인)
+ #systemctl restart httpd
+
+1. cd /etc/ssl/ 자체 CA 키 + 인증서 생성
+가. CA 개인키
+     #openssl genrsa -out ca-key.pem 4096
+
+      나. CA 인증서 (루트 CA)
+           #openssl req -x509 -new -key ca-key.pem -sha256 -days 3650 -out ca.pem \-subj                              "/C=KR/ST=Daegu/L=Daegu/O=Security/OU=RootCA/CN=Roror Root CA"
+
+  2. #vi /etc/ssl/openssl-san.cnf  //밑의 내용 붙혀넣기
+
+[ req ]
+default_bits       = 2048
+prompt             = no
+default_md         = sha256
+req_extensions     = req_ext
+distinguished_name = dn
+
+[ dn ]
+C  = KR
+ST = Daegu
+L  = Daegu
+O  = Roror Company
+OU = Sec
+CN = [roror.co.kr](http://roror.co.kr/)
+
+[ req_ext ]
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = [roror.co.kr](http://roror.co.kr/)
+DNS.2 = [www.roror.co.kr](http://www.roror.co.kr/)
+DNS.3 = [mail.roror.co.kr](http://mail.roror.co.kr/)
+
+1. 서버키 생성
+#openssl genrsa -out server-key.pem 2048
+
+ 4 . CSR 생성 명령어
+      #openssl req -new -key server-key.pem -out server.csr -config openssl-san.cnf
+
+1. 인증서 서명
+
+     #openssl x509 -req -in server.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial \-
+     out server-cert.pem -days 825 -sha256 \
+    -extfile openssl-san.cnf -extensions req_ext
+
+    #openssl x509 -in server-cert.pem -text -noout | grep -A 1 "Subject Alternative Name"
+
+---
+
+잘안된다 = setenforce 0 을 써봐라
+                   getenforce 0
+
+방화벽 허물기 = systemctl stop firewalld
+
+Virtual Hosting
+user — homepage  (naver.com)    /home/user/?
+roror —homepage  (daum.net)     /home/roror/?
+hacker —homepage  (google.co.kr)  /…..
+
+[web.roror.co.kr](http://web.roror.co.kr) —> roror계정의 홈페이지로 연결
+
+#vi userdir.conf
+ #UserDir disabled (주석처리)
+   UserDir public_html (주석해제)
+#systemctl restart httpd
+
+---
+
+프로그램이 실행된 상태에서 Ctrl + Z (stopped)
+프로그램 마지막에 &을 사용하면 “백그라운드에서 실행해라” 이다. 
+Ctrl + D (logout)
+kill -l (interrupt) - %(번호) 해서 백그라운드의 해당번호를 없앤다 ex)kill -9 %1
+bg - 멈춤 상태에 있는걸 백그라운드에서 실행 가능    ex) 2번 백그라운드에서 실행 = 
+fg  - jobs에서 + 떠있는거부터 실행 그다음 - 떠있는거실행
+jobs - 현재 실행되고 있는 작업들 정렬
+
+.test.txt.swp —> 삭제 (swp) 확장자는 swp고 앞에 .(점)이 있다
+
+dnf install gedit (gedit = GUI)
+
+---
+
+tar tvfz - 압축풀기?
+unzip -t  - 압축 파일에 있는 파일들의 디렉토리 위치와 종류를 보여줌
+
+$ mv ./main\(pentest\)/* .   -뜻알기
+$ rm -rf ./main\(pentest\)/
+$ chmod 711 /home/roror
+$ chmod 711 /home/roror
