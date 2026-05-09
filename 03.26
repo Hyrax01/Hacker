@@ -1,5 +1,6 @@
 -리눅스 종료
  shutdown -h now
+ half
  poweroff
  init 0
 
